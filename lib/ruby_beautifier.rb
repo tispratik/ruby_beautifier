@@ -5,11 +5,13 @@ module RubyBeautifier
     files = Dir["**/*.rb"]
 
     files.each do |file|
-      cmd = 'sed -i "" "s/\([^ ]\)=>/\1 =>/g" ' + file
-      system cmd
+      fix_spacing_before_hashrocket = 'sed -i "" "s/\([^ ]\)=>/\1 =>/g" ' + file
+      system fix_spacing_before_hashrocket
 
-      cmd = 'sed -i "" "s/=>\([^ ]\)/=> \1/g" ' + file
-      system cmd
+      fix_spacing_after_hashrocket = 'sed -i "" "s/=>\([^ ]\)/=> \1/g" ' + file
+      system fix_spacing_after_hashrocket
     end
+
+    system "sh #{File.expand_path(File.dirname(__FILE__))}/../bin/insert_space_after_comma.sh"
   end
 end

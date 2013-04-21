@@ -18,8 +18,8 @@ Or install it yourself as:
 
 ## Usage
 
-Run the following ruby code from anywhere:
-RubyBeautifier.run
+    require 'ruby_beautifier'
+    RubyBeautifier.run
 
 ## Contributing
 
