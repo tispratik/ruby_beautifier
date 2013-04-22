@@ -7,8 +7,8 @@ module RubyBeautifier
     files.each do |file|
       text = File.read(file)
 
-      # Add space before hash rocket
-      text.gsub!(/(?<! )=>/, ' =>')
+      # Add space before hash rocket (Make sure to skip <=> cases)
+      text.gsub!(/(?<! <)=>/, ' =>')
 
       # Add space after hash rocket
       text.gsub!(/=>(?! )/, '=> ')
