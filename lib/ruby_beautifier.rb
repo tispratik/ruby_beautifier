@@ -5,13 +5,30 @@ module RubyBeautifier
     files = Dir["**/*.rb"]
 
     files.each do |file|
-      fix_spacing_before_hashrocket = 'sed -i "" "s/\([^ ]\)=>/\1 =>/g" ' + file
-      system fix_spacing_before_hashrocket
+      text = File.read(file)
 
-      fix_spacing_after_hashrocket = 'sed -i "" "s/=>\([^ ]\)/=> \1/g" ' + file
-      system fix_spacing_after_hashrocket
+      # Add space before hash rocket
+      text.gsub!(/(?<! )=>/, ' =>')
+
+      # Add space after hash rocket
+      text.gsub!(/=>(?! )/, '=> ')
+
+      # Add space after comma, following cases have been tested
+      # [a,b,c,d] => [a, b, c, d]
+      # [a, b, c,d] => [a, b, c, d]
+      # (a,b,c,d) => (a, b, c, d)
+      # (a, b, c, d) => no change
+      # a.join(',') => no change
+      # a.join(/,/) => no change
+      # a.join(",") => no change
+      # ["a","b", "c","d","e", "f"] => ["a", "b", "c", "d", "e", "f"]
+      # ["a","b", "c","d","e", "f"], => ["a", "b", "c", "d", "e", "f"],
+      text.gsub!(/(,(?! ))(?!'\))(?!"\))(?!\/\))(?!\n)/, ', ')
+
+      # add a blank new line between methods
+      text.gsub!(/end(\n)def/, '\n\n')
+
+      File.open(file, "w") { |file| file.puts text }
     end
-
-    system "sh #{File.expand_path(File.dirname(__FILE__))}/../bin/insert_space_after_comma.sh"
   end
 end
