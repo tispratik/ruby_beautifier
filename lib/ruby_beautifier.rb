@@ -23,7 +23,8 @@ module RubyBeautifier
       # a.join(",") => no change
       # ["a","b", "c","d","e", "f"] => ["a", "b", "c", "d", "e", "f"]
       # ["a","b", "c","d","e", "f"], => ["a", "b", "c", "d", "e", "f"],
-      text.gsub!(/(,(?! ))(?!'\))(?!"\))(?!\/\))(?!\n)/, ', ')
+      # text.gsub!(/(,(?! ))(?!'\))(?!"\))(?!\/\))(?!\n)/, ', ')
+      text.gsub!(/,(?!( |'\)|"\)|\/\)|\n))/, ', ')
 
       # add a blank new line between methods
       text.gsub!(/end(\n)def/, '\n\n')
