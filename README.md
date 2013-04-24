@@ -1,6 +1,6 @@
 # RubyBeautifier
 
-This gem is for beautifiying ruby code. It uses tradional regular expression parsing.
+This gem is for beautifiying ruby code. It uses tradional regular expression parsing and is only intended to fix very common spacing issues.
 
 ## Installation
 
